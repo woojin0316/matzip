@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<form novalidate class="_obj-dialog" id="loginForm"
+      th:with="userRegex=${T(com.jwj.matzip.regexes.UserRegex)}"
+      th:fragment="loginForm">
+<!--    fragment 라는 것을 사용해서 이름을 지정해줌 보통 아이디랑 같은 값을 지정 여러 HTML 로 분리하여 유지관리.-->
+
+    <h2 class="__title">로그인</h2>
+
+    <label class="_obj-label" rel="emailLabel">
+        <span class="__text">이메일</span>
+        <input required autocomplete="email" class="_obj-input __field" maxlength="50" minlength="5" name="email"
+               placeholder="이메일 (user@sample.com)" spellcheck="false" type="email"
+               th:attrappend="data-regex=${userRegex.email.expression}">
+    </label>
+
+    <label class="_obj-label" rel="passwordLabel">
+        <span class="__text">비밀번호</span>
+        <input required autocomplete="current-password" class="_obj-input __field" maxlength="50" minlength="5"
+               name="password" placeholder="비밀번호 (숫자, 영어 대소문자, 특수기호 5자 이상 50자 이하)" spellcheck="false" type="password"
+               th:attrappend="data-regex=${userRegex.password.expression}">
+    </label>
+
+    <label class="_obj-check-label">
+        <input name="remember" type="checkbox">
+        <span class="__box"></span>
+        <span class="__text">다음부터 이메일을 기억합니다.</span>
+    </label>
+
+    <button class="_obj-button" type="submit">
+        <i class="__icon fa-solid fa-arrow-right-to-bracket"></i>
+        <span class="__text">로그인</span>
+    </button>
+
+    <ul class="menu">
+        <li class="item">
+            <span class="text">아직 계정이 없으신가요?</span>
+            <a href="#" class="link" rel="showRegisterCaller">회원가입</a>
+        </li>
+        <li class="item">
+            <span class="text">계정 정보를 분실하셨나요?</span>
+            <a href="#" class="link" rel="showRecoverCaller">계정 복구</a>
+        </li>
+    </ul>
+</form>
+</html>

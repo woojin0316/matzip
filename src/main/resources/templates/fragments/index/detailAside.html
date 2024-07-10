@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<aside class="aside list" id="detailAside" th:fragment="detailAside">
+    <h2 class="title">
+        <i class="closer fa-solid fa-chevron-left" rel="closer"></i>
+        <span class="text">맛집 상세정보</span>
+    </h2>
+
+    <div class="image-container">
+        <img alt="" class="image thumbnail"
+             src="https://i.namu.wiki/i/8s7OaNPsZ8KC1e8RQ6QZEwgfFUoIVVOIm0jA72-UO6Imw0OgI1aEK_DulMeXWbg4tstts3IQFMJS0jmYKD9rzQ.webp">
+        <img alt="" class="image" src="https://img.choroc.com/newshop/goods/009179/009179_1.jpg">
+        <img alt="" class="image"
+             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQLmTt8iaFFT5iFNCntnOBkBUGKBCqENwitiio2KSzcw&s">
+        <img alt="" class="image"
+             src="https://eapp-cdn.emart.com/recipe/recipeBook/20231227/6b1f93ad-7aa1-4970-ac50-a65467de8e89.jpg">
+        <img alt="" class="image" src="https://health.chosun.com/site/data/img_dir/2024/04/25/2024042502343_0.jpg">
+    </div>
+    <div class="info-container">
+        <div class="name-container">
+            <span class="name" rel="name">몬도카프 더현대점</span>
+            <span class="category" rel="category">일식</span>
+        </div>
+        <div class="stat-container">
+            <div class="item favorite">
+                <span class="text">즐겨찾기</span>
+                <span class="value" rel="favorite">1,234</span>
+            </div>
+            <div class="item review">
+                <span class="text">리뷰</span>
+                <span class="value" rel="review">1,234</span>
+            </div>
+        </div>
+        <div class="button-container">
+            <button class="button save" rel="saveButton" type="button">
+                <i class="icon fa-solid fa-star "></i>
+                <span class="text">즐겨찾기</span>
+            </button>
+            <button class="button" rel="reportButton" type="button">
+                <i class="icon fa-solid fa-circle-exclamation"></i>
+                <span class="text">신고</span>
+            </button>
+            <button class="button" rel="modifyButton" type="button">
+                <i class="icon fa-solid fa-pen"></i>
+                <span class="text">수정</span>
+            </button>
+            <button class="button" rel="deleteButton" type="button">
+                <i class="icon fa-solid fa-trash"></i>
+                <span class="text">삭제</span>
+            </button>
+        </div>
+    </div>
+    <div class="spec-container">
+        <div class="item">
+            <i class="icon fa-solid fa-location-dot"></i>
+            <span class="item" rel="address">대구 중구 남성로 50 이타국시</span>
+        </div>
+        <div class="item">
+            <i class="icon fa-solid fa-phone"></i>
+            <a class="text contact" href="tel:010-1234-5678" rel="contact">010-1234-5678</a>
+        </div>
+        <div class="item">
+            <i class="icon fa-solid fa-clock"></i>
+            <span class="text schedule">
+                <span class="item sun">
+                    <span class="day">일</span>
+                    <span class="op" rel="sunOp">00:00 - 00:00</span>
+                </span>
+                <span class="item mon">
+                    <span class="day">월</span>
+                    <span class="op" rel="monOp">00:00 - 00:00</span>
+                </span>
+                <span class="item tue">
+                    <span class="day">화</span>
+                    <span class="op" rel="tueOp">00:00 - 00:00</span>
+                </span>
+                <span class="item wed">
+                    <span class="day">수</span>
+                    <span class="op" rel="wedOp">00:00 - 00:00</span>
+                </span>
+                <span class="item thu">
+                    <span class="day" rel="thuOp">목</span>
+                    <span class="op">00:00 - 00:00</span>
+                </span>
+                <span class="item fri">
+                    <span class="day" rel="friOp">금</span>
+                    <span class="op">00:00 - 00:00</span>
+                </span>
+                <span class="item sat">
+                    <span class="day" rel="satOp">토</span>
+                    <span class="op">00:00 - 00:00</span>
+                </span>
+            </span>
+        </div>
+        <div class="item">
+            <i class="icon fa-solid fa-align-justify"></i>
+            <span class="text" rel="description">설명설명</span>
+        </div>
+        <div class="item">
+            <i class="icon fa-solid fa-user"></i>
+            <span class="text" rel="userNickname">등록자닉네임</span>
+        </div>
+        <div class="item">
+            <i class="icon fa-solid fa-calendar-days"></i>
+            <span class="text" rel="createdAt">2024-01-01</span>
+        </div>
+    </div>
+    <form class="review-form" th:with="placeReviewRegex =${T(com.jwj.matzip.regexes.PlaceReviewRegex)}">
+        <span class="not-signed" th:if="${session.user == null}">로그인 후 리뷰를 남길 수 있어요.</span>
+        <!--                                    로그인을 하지 않으면 띄우는 텍스트-->
+        <input hidden name="placeIndex" type="hidden"><!--내가 지금 리뷰하고 있는 맛집의 정보를 담을 예정.-->
+        <h3 class="title">리뷰 작성</h3>
+        <span class="_obj-label attachment" th:disabled="${session.user == null}">
+            <input hidden multiple accept="image/*" name="images" type="file"> <!--type="file" 첨부파일창을 보여줌-->
+            <span class="__text">첨부 이미지</span>
+            <span class="image-container">
+                <span class="empty">이미지가 없습니다.</span>
+            </span>
+            <span class="button-container" th:disabled="${session.user == null}">
+                <button class="_obj-button" name="clearButton" type="button">전체 삭제</button>
+                <button class="_obj-button" name="deleteButton" type="button">선택 삭제</button>
+                <span class="spring"></span>
+                <button class="_obj-button" name="addButton" type="button">추가</button>
+            </span>
+        </span>
+        <label class="_obj-label rating">
+            <span class="__text">별점</span>
+            <select class="_obj-input" name="rating" th:disabled="${session.user == null}">
+                <option selected value="5">⭐⭐⭐⭐⭐</option>
+                <option value="4">⭐⭐⭐⭐</option>
+                <option value="3">⭐⭐⭐</option>
+                <option value="2">⭐⭐</option>
+                <option value="1">⭐</option>
+            </select>
+        </label>
+
+        <label class="_obj-label content" rel="contentLabel">
+            <span class="__text">내용</span>
+            <textarea class="_obj-input" name="content" rows="5"
+                      th:attrprepend="data-regex=${placeReviewRegex.content.expression}"
+                      th:disabled="${session.user == null}"></textarea>
+            <span class="__warning">올바른 내용을 입력해 주세요.</span>
+        </label>
+        <button class="_obj-button" type="submit" th:disabled="${session.user == null}">작성하기</button>
+        <!--                                                     로그인을 해야 작성버튼이 활성화 됨 -->
+    </form>
+    <ul class="review-container">
+        <li class="item">
+            <span class="head">
+                <span class="left">
+                    <span class="nickname">샘플닉네임</span>
+                    <span class="rating">
+                        <i class="star fa-solid fa-star"></i>
+                        <i class="star fa-solid fa-star"></i>
+                        <i class="star fa-solid fa-star"></i>
+                        <i class="star fa-solid fa-star"></i>
+                        <i class="star fa-regular fa-star"></i>
+                    </span>
+                </span>
+                <span class="right date">2024-05-13 09:28:17</span>
+            </span>
+            <span class="body">
+                <span class="image-container" data-flickity> <!--data-flickity 사진 목록 슬라이딩 기능 -->
+                    <img th:src="@{assets/images/java.png}" class="image" alt="">
+                    <img th:src="@{assets/images/java.png}" class="image" alt="">
+                    <img th:src="@{assets/images/java.png}" class="image" alt="">
+                    <img th:src="@{assets/images/java.png}" class="image" alt="">
+                    <img th:src="@{assets/images/java.png}" class="image" alt="">
+                </span>
+                <span class="body content">
+                    존맛탱구리
+                </span>
+            </span>
+            <span class="foot">
+                <a href="#" class="link" rel="deleteLink">삭제</a>
+                <a href="#" class="link" rel="reportLink">신고</a>
+            </span>
+        </li>
+    </ul>
+</aside>
+</html>
+
+
+
+
+
+
+
+

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jwj.matzip.mappers.PlaceReviewMapper">
+
+    <delete id="deletePlaceReview">
+        DELETE
+        FROM `matzip`.`place_reviews`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </delete>
+
+    <insert id="insertPlaceReviewReport"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="com.jwj.matzip.entities.PlaceReviewReportEntity">
+        INSERT INTO `matzip`.`place_review_reports`(`place_review_index`, `user_email`, `created_at`)
+        VALUES (#{placeReviewIndex}, #{userEmail}, #{createdAt})
+    </insert>
+
+    <insert id="insertPlaceReview"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="com.jwj.matzip.entities.PlaceReviewEntity">
+        INSERT INTO `matzip`.`place_reviews`(`place_index`, `user_email`, `rating`, `content`, `created_at`, `modified_at`)
+        VALUES (#{placeIndex}, #{userEmail}, #{rating}, #{content}, #{createdAt}, #{modifiedAt})
+    </insert>
+
+    <insert id="insertPlaceReviewImage"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="com.jwj.matzip.entities.PlaceReviewImageEntity">
+        INSERT INTO `matzip`.`place_review_images`(`place_review_index`, `data`, `name`, `content_type`)
+        VALUES (#{placeReviewIndex}, #{data}, #{name}, #{contentType})
+    </insert>
+
+    <select id="selectPlaceReviewReport"
+            resultType="com.jwj.matzip.entities.PlaceReviewReportEntity">
+        SELECT `place_review_index` AS `placeReviewIndex`,
+               `user_email`         AS `userEmail`,
+               `created_at`         AS `createdAt`
+        FROM `matzip`.`place_review_reports`
+        WHERE `place_review_index` = #{placeReviewIndex}
+          AND BINARY `user_email` = #{userEmail}
+        LIMIT 1
+    </select>
+
+    <select id="selectPlaceReview" resultType="com.jwj.matzip.entities.PlaceReviewEntity">
+        SELECT `index`       AS `index`,
+               `place_index` AS `placeIndex`,
+               `user_email`  AS `userEmail`,
+               `rating`      AS `rating`,
+               `content`     AS `content`,
+               `created_at`  AS `createdAt`,
+               `modified_at` AS `modifiedAt`
+        FROM `matzip`.`place_reviews`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </select>
+
+    <select id="selectPlaceReviewByPlaceIndex"
+            resultType="com.jwj.matzip.dtos.PlaceReviewDto">
+        SELECT `index`       AS `index`,
+               `place_index` AS `placeIndex`,
+               `user_email`  AS `userEmail`,
+               `rating`      AS `rating`,
+               `content`     AS `content`,
+               `created_at`  AS `createdAt`,
+               `modified_at` AS `modifiedAt`,
+               (SELECT `user`.`nickname`
+                FROM `matzip`.`users` AS `user`
+                WHERE `user`.`email` = `placeReview`.`user_email`
+                LIMIT 1)     AS `userNickname`
+        FROM `matzip`.`place_reviews` AS `placeReview`
+        WHERE `place_index` = #{placeIndex}
+        ORDER BY `index` DESC
+    </select>
+
+    <select id="selectPlaceReviewImage"
+            resultType="com.jwj.matzip.entities.PlaceReviewImageEntity">
+        SELECT `index`              AS `index`,
+               `place_review_index` AS `placeReviewIndex`,
+               `data`               AS `data`,
+               `name`               AS `name`,
+               `content_type`       AS `contentType`
+        FROM `matzip`.`place_review_images`
+        WHERE `index` = #{index}
+        LIMIT 1
+
+    </select>
+
+    <select id="selectPlaceReviewImageByPlaceReviewIndex"
+            resultType="com.jwj.matzip.entities.PlaceReviewImageEntity">
+        SELECT `index` AS `index`,
+        `place_review_index` AS `placeReviewIndex`,
+        <if test="!excludeData">
+            `data` AS `data`,
+        </if>
+        `name` AS `name`,
+        `content_type` AS `contentType`
+        FROM `matzip`.`place_review_images`
+        WHERE `place_review_index` = #{placeReviewIndex}
+    </select>
+</mapper>

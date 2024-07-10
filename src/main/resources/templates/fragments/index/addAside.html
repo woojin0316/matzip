@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<aside class="aside add" id="addAside" th:fragment="addAside">
+
+    <h2 class="title">맛집 추가</h2>
+    <form novalidate id="addForm" class="form" th:with="placeRegex = ${T(com.jwj.matzip.regexes.PlaceRegex)}">
+        <label class="_obj-label thumbnail" rel="thumbnailLabel">
+            <input hidden accept="image/*" name="thumbnail" type="file">
+            <span class="__text">대표 이미지</span>
+            <span class="image-wrapper">
+                <span class="empty">대표 이미지를 선택해 주세요.</span>
+                <img src="" class="image" alt="">
+            </span>
+        </label>
+
+        <label class="_obj-label" rel="titleLabel">
+            <span class="__text">상호명</span>
+            <input required autocomplete="off" class="_obj-input __field" maxlength="50" minlength="1" name="title"
+                   placeholder="상호명(숫자, 영어 대소문자, 완성 한글, 공백 1자 이상 50자 이하)" type="text"
+                   th:attrappend="data-regex=${placeRegex.title.expression}">
+            <span class="__warning">올바른 상호명을 입력해 주세요.</span>
+        </label>
+        <label class="_obj-label" rel="categoryLabel">
+            <span class="__text">분류</span>
+            <select class="_obj-input __field" name="category">
+                <option disabled hidden selected value="-1">분류 선택</option>
+                <option value="KOR">한식</option>
+                <option value="JPN">일식</option>
+                <option value="CHN">중식</option>
+                <option value="WST">양식</option>
+                <option value="KRB">분식</option>
+                <option value="ESA">동남아</option>
+                <option value="ETC">기타</option>
+            </select>
+            <span class="__warning">분류를 선택해 주세요.</span>
+        </label>
+        <label class="_obj-label" rel="contactLabel">
+            <span class="__text">연락처</span>
+            <span class="__horizontal">
+                <input required autocomplete="off" class="_obj-input __field" maxlength="4" minlength="3"
+                       name="contactFirst" spellcheck="false" type="text"
+                       th:attrappend="data-regex=${placeRegex.contactFirst.expression}">
+                <input required autocomplete="off" class="_obj-input __field" maxlength="4" minlength="3"
+                       name="contactSecond" spellcheck="false" type="text"
+                       th:attrappend="data-regex=${placeRegex.contactSecond.expression}">
+                <input required autocomplete="off" class="_obj-input __field" maxlength="4" minlength="4"
+                       name="contactThird" spellcheck="false" type="text"
+                       th:attrappend="data-regex=${placeRegex.contactThird.expression}">
+            </span>
+            <span class="__warning">올바른 연락처를 입력해 주세요.</span>
+        </label>
+        <label class="_obj-label" rel="addressLabel">
+            <span class="__text">주소</span>
+            <span class="__horizontal">
+                <input readonly required autocomplete="off" class="_obj-input -spring __field" maxlength="5"
+                       minlength="5" name="addressPostal" spellcheck="false" type="text"
+                       th:attrappend="data-regex=${placeRegex.addressPostal.expression}">
+                <button class="_obj-button" name="addressFind" type="button">주소 찾기</button>
+            </span>
+            <input readonly required autocomplete="off" class="_obj-input __field" maxlength="100" minlength="1"
+                   name="addressPrimary" placeholder="주소찾기 버튼을 클릭하여 주소를 입력해 주세요." spellcheck="false" type="text"
+                   th:attrappend="data-regex=${placeRegex.addressPrimary.expression}">
+            <input autocomplete="off" class="_obj-input __field" maxlength="100" minlength="1" name="addressSecondary"
+                   placeholder="상세 주소(건물명, 동/호 등)" spellcheck="false" type="text"
+                   th:attrappend="data-regex=${placeRegex.addressSecondary.expression}">
+            <span class="__warning">올바른 주소를 입력해 주세요.</span>
+        </label>
+        <label class="_obj-label" rel="coordsLabel">
+            <span class="__text">좌표</span>
+            <span class="__horizontal">
+                <input disabled readonly required autocomplete="off" class="_obj-input __field" name="latitude"
+                       placeholder="위도" spellcheck="false" type="text">
+                <input disabled readonly required autocomplete="off" class="_obj-input __field" name="longitude"
+                       placeholder="경도" spellcheck="false" type="text">
+            </span>
+        </label>
+        <label class="_obj-label" rel="descriptionLabel">
+            <span class="__text">설명</span>
+            <textarea required autocomplete="off" class="_obj-input" name="description" placeholder="설명을 입력해 주세요."
+                      spellcheck="false" th:attrappend="data-regex=${placeRegex.description.expression}"></textarea>
+        </label>
+        <div class="_obj-label schedule" rel="scheduleLabel">
+            <span class="__text">영업 일정</span>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>요일</th>
+                    <th>오픈</th>
+                    <th>마감</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th>
+                        <label class="_obj-check-label">
+                            <input checked name="sunOp" type="checkbox">
+                            <span class="__box"></span>
+                            <span class="__text">일</span>
+                        </label>
+                    </th>
+                    <td>
+                        <label class="_obj-label">
+                            <input required class="_obj-input" name="sunOpen" type="time">
+                        </label>
+                    </td>
+                    <td>
+                        <label class="_obj-label">
+                            <input required class="_obj-input" name="sunClose" type="time">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label class="_obj-check-label">
+                            <input checked name="monOp" type="checkbox">
+                            <span class="__box"></span>
+                            <span class="__text">월</span>
+                        </label>
+                    </th>
+                    <td>
+                        <label class="_obj-label">
+                            <input required class="_obj-input" name="monOpen" type="time">
+                        </label>
+                    </td>
+                    <td>
+                        <label class="_obj-label">
+                            <input required class="_obj-input" name="monClose" type="time">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label class="_obj-check-label">
+                            <input checked name="tueOp" type="checkbox">
+                            <span class="__box"></span>
+                            <span class="__text">화</span>
+                        </label>
+                    </th>
+                    <td>
+                        <label class="_obj-label">
+                            <input required class="_obj-input" name="tueOpen" type="time">
+                        </label>
+                    </td>
+                    <td>
+                        <label class="_obj-label">
+                            <input required class="_obj-input" name="tueClose" type="time">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label class="_obj-check-label">
+                            <input checked name="wedOp" type="checkbox">
+                            <span class="__box"></span>
+                            <span class="__text">수</span>
+                        </label>
+                    </th>
+                    <td>
+                        <label class="_obj-label">
+                            <input required class="_obj-input" name="wedOpen" type="time">
+                        </label>
+                    </td>
+                    <td>
+                        <label class="_obj-label">
+                            <input required class="_obj-input" name="wedClose" type="time">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label class="_obj-check-label">
+                            <input checked name="thuOp" type="checkbox">
+                            <span class="__box"></span>
+                            <span class="__text">목</span>
+                        </label>
+                    </th>
+                    <td>
+                        <label class="_obj-label">
+                            <input required class="_obj-input" name="thuOpen" type="time">
+                        </label>
+                    </td>
+                    <td>
+                        <label class="_obj-label">
+                            <input required class="_obj-input" name="thuClose" type="time">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label class="_obj-check-label">
+                            <input checked name="friOp" type="checkbox">
+                            <span class="__box"></span>
+                            <span class="__text">금</span>
+                        </label>
+                    </th>
+                    <td>
+                        <label class="_obj-label">
+                            <input required class="_obj-input" name="friOpen" type="time">
+                        </label>
+                    </td>
+                    <td>
+                        <label class="_obj-label">
+                            <input required class="_obj-input" name="friClose" type="time">
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label class="_obj-check-label">
+                            <input checked name="satOp" type="checkbox">
+                            <span class="__box"></span>
+                            <span class="__text">토</span>
+                        </label>
+                    </th>
+                    <td>
+                        <label class="_obj-label">
+                            <input required class="_obj-input" name="satOpen" type="time">
+                        </label>
+                    </td>
+                    <td>
+                        <label class="_obj-label">
+                            <input required class="_obj-input" name="satClose" type="time">
+                        </label>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <button class="_obj-button" type="submit">추가하기</button>
+        <button class="_obj-button" name="cancelButton" type="button">취소</button>
+    </form>
+</aside>
+</html>

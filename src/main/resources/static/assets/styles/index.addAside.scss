@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+#addAside {
+  > .form {
+    padding: 1rem;
+
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    justify-content: flex-start;
+
+    > .thumbnail {
+      > .image-wrapper {
+        align-items: stretch;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        >.empty{
+          width: 100%;
+          aspect-ratio: 16/9;
+          background-color: #f5f5f5;
+          border-radius: 0.25rem;
+          color: #757575;
+          cursor: pointer;
+
+          align-items: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        >.image{
+          width: 100%;
+          aspect-ratio: 16/9;
+          background-color: #f5f5f5;
+          border-radius: 0.25rem;
+          cursor: pointer;
+          display: none;
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+    }
+
+    > .schedule {
+      > .table {
+        border-collapse: collapse;
+        border-spacing: initial;
+
+        > thead {
+          background-color: #eeeeee;
+
+          > tr > th {
+            font: inherit;
+            padding: 0.5rem 0.375rem;
+
+            &:first-of-type {
+              border-top-left-radius: 0.25rem;
+              border-bottom-left-radius: 0.25rem;
+            }
+
+            &:last-of-type {
+              border-top-right-radius: 0.25rem;
+              border-bottom-right-radius: 0.25rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+._obj-dialog {
+  top: calc(50% + 0.25rem);
+  left: 50%;
+  width: 20rem;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 1.5rem 0.0625rem rgba(33, 33, 33, 0.6274509804);
+  box-sizing: border-box;
+  opacity: 0;
+  padding: 2.5rem;
+  pointer-events: none;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  transition-duration: 250ms;
+  transition-property: top, opacity;
+  transition-timing-function: ease;
+  z-index: 9;
+}
+._obj-dialog.-visible {
+  top: 50%;
+  opacity: 1;
+  pointer-events: all;
+}
+._obj-dialog > .__title {
+  font-size: 2rem;
+  font-weight: 100;
+  margin-bottom: 1.5rem;
+}
+
+/*# sourceMappingURL=common._obj-dialog.css.map */

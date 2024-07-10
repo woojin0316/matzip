@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<nav id="nav" th:fragment="nav">
+    <ul class="menu">
+        <li class="item">
+            <a class="link" href="#" rel="showListAsideCaller">
+                <i class="icon fa-solid fa-list-ul"></i>
+                <span class="text">맛집</span>
+            </a>
+        </li>
+        <li class="item">
+            <a class="link" href="#" rel="showAddAsideCaller">
+                <i class="icon fa-solid fa-plus"></i>
+                <span class="text">추가</span>
+            </a>
+        </li>
+    </ul>
+    <div class="spring"></div>
+    <ul class="menu">
+        <li class="item" th:if="${session.user == null}">
+            <a href="#" class="link" rel="showLoginCaller">
+                <i class="fa-solid fa-arrow-right-to-bracket" rel="icon"></i>
+                <span class="text">로그인</span>
+            </a>
+        </li>
+        <li class="item" th:if="${session.user != null}">
+            <a th:href="@{/user/logout}" class="link" rel="showLogoutCaller">
+                <i class="fa-solid fa-arrow-right-to-bracket" rel="icon"></i>
+                <span class="text">로그아웃</span>
+            </a>
+        </li>
+        <li class="item">
+            <a href="#" class="link">
+                <i class="icon fa-solid fa-headset"></i>
+                <span class="text">고객센터</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+</html>

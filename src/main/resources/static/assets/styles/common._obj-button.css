@@ -1,0 +1,24 @@
+._obj-button {
+  background-color: #545454;
+  border: none;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  color: #f5f5f5;
+  cursor: pointer;
+  padding: 0.0625rem;
+  transition: background-color 125ms ease;
+  user-select: none;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: center;
+}
+._obj-button:hover {
+  background-color: #3b3b3b;
+}
+._obj-button:active {
+  background-color: #212121;
+}
+
+/*# sourceMappingURL=common._obj-button.css.map */

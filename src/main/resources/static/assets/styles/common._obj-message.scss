@@ -1,0 +1,94 @@
+@charset "UTF-8";
+
+
+._obj-message-cover {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #212121a0;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  transition: opacity 250ms;
+  z-index: 10;
+
+  &.-visible{
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+._obj-message {
+  top: calc(50% + 0.25rem);
+  left: 50%;
+  min-width: 15rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 1rem 0.0625rem #21212160;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  transition-duration: 250ms;
+  transition-property: top, opacity;
+  z-index: 11;
+
+  &.-visible{
+    top: 50%;
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  > .__title {
+    background-color: #212121;
+    color: #ffffff;
+    padding: 0.75rem 1rem;
+  }
+
+  > .__content {
+    background-color: #ffffff;
+    line-height: 1.25;
+    padding: 0.75rem 1rem;
+  }
+
+  > .__button-container {
+    border-top: 0.0625rem solid #eeeeee;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+
+    > .__button {
+      background-color: #ffffff;
+      border: none;
+      cursor: pointer;
+      font: inherit;
+      line-height: inherit;
+      margin: initial;
+      padding-block: initial;
+      padding-inline: initial;
+      outline: none;
+      padding: 0.5rem;
+      user-select: none;
+
+      &:hover {
+        background-color: darken(#ffffff, 2.5%);
+      }
+
+      &:active {
+        background-color: darken(#ffffff, 5%);
+      }
+
+      &:focus {
+        text-decoration: underline;
+      }
+
+      & + .__button{
+        border-left: 0.0625rem solid #e0e0e0;
+      }
+    }
+  }
+
+
+}

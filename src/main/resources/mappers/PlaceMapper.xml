@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jwj.matzip.mappers.PlaceMapper">
+    <insert id="insertPlace"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="com.jwj.matzip.entities.PlaceEntity">
+        INSERT INTO `matzip`.`places` (`index`, `thumbnail`, `thumbnail_file_name`, thumbnail_content_type, `title`, `place_category_code`, `contact_first`, `contact_second`, `contact_third`, `address_postal`,`address_primary`, `address_secondary`, `latitude`,`longitude`, `description`, `schedule`, `user_email`, `created_at`, `modified_at`)
+        VALUES (#{index}, #{thumbnail}, #{thumbnailFileName}, #{thumbnailContactType}, #{title}, #{placeCategoryCode},
+                #{contactFirst}, #{contactSecond}, #{contactThird}, #{addressPostal}, #{addressPrimary},
+                #{addressSecondary}, #{latitude}, #{longitude}, #{description}, #{schedule}, #{userEmail}, #{createdAt},
+                #{modifiedAt})
+    </insert>
+
+
+    <select id="selectPlaceDtoByIndexAndUserEmail" resultType="com.jwj.matzip.dtos.PlaceDto">
+        SELECT `place`.`index`                      AS `index`,
+               `place`.`thumbnail`                  AS `thumbnail`,
+               `place`.`thumbnail_file_name`        AS `thumbnailFileName`,
+               `place`.`thumbnail_content_type`     AS `thumbnailContentType`,
+               `place`.`title`                      AS `title`,
+               `place`.`place_category_code`        AS `placeCategoryCode`,
+               `place`.`contact_first`              AS `contactFirst`,
+               `place`.`contact_second`             AS `contactSecond`,
+               `place`.`contact_third`              AS `contactThird`,
+               `place`.`address_postal`             AS `addressPostal`,
+               `place`.`address_primary`            AS `addressPrimary`,
+               `place`.`address_secondary`          AS `addressSecondary`,
+               `place`.`latitude`                   AS `latitude`,
+               `place`.`longitude`                  AS `longitude`,
+               `place`.`description`                AS `description`,
+               `place`.`schedule`                   AS `schedule`,
+               `place`.`user_email`                 AS `userEmail`,
+               `place`.`created_at`                 AS `createdAt`,
+               `place`.`modified_at`                AS `modifiedAt`,
+               `placeCategory`.`text`               AS `placeCategoryText`,
+               `user`.`nickname`                    AS `userNickname`,
+               COUNT(`placeFavorite`.`place_index`) AS `favoriteCount`,
+               COUNT(`placeReview`.`index`)         AS `reviewCount`
+        FROM `matzip`.`places` AS `place`
+                 LEFT JOIN `matzip`.`users` AS `user` ON `place`.`user_email` = `user`.`email`
+                 LEFT JOIN `matzip`.`place_categories` AS `placeCategory` ON `place`.`place_category_code` = `placeCategory`.`code`
+                 LEFT JOIN `matzip`.`place_favorites` AS `placeFavorite` ON `place`.`index` = `placeFavorite`.`place_index`
+                 LEFT JOIN `matzip`.`place_reviews` AS `placeReview` ON `place`.`index` = `placeReview`.`place_index`
+        WHERE `place`.`index` = #{index}
+        GROUP BY `place`.`index`
+    </select>
+
+    <select id="selectPlaceByIndex" resultType="com.jwj.matzip.entities.PlaceEntity">
+        SELECT `index`                  AS `index`,
+               `thumbnail`              AS `thumbnail`,
+               `thumbnail_file_name`    AS `thumbnailFileName`,
+               thumbnail_content_type AS `thumbnailContactType`,
+               `title`                  AS `title`,
+               `place_category_code`    AS `placeCategoryCode`,
+               `contact_first`          AS `contactFirst`,
+               `contact_second`         AS `contactSecond`,
+               `contact_third`          AS `contactThird`,
+               `address_postal`         AS `addressPostal`,
+               `address_primary`        AS `addressPrimary`,
+               `address_secondary`      AS `addressSecondary`,
+               `latitude`               AS `latitude`,
+               `longitude`              AS `longitude`,
+               `description`            AS `description`,
+               `schedule`               AS `schedule`,
+               `user_email`             AS `userEmail`,
+               `created_at`             AS `createdAt`,
+               `modified_at`            AS `modifiedAt`
+        FROM `matzip`.`places`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </select>
+    <select id="selectPlaceByContact" resultType="com.jwj.matzip.entities.PlaceEntity">
+        SELECT `index`                  AS `index`,
+               `thumbnail`              AS `thumbnail`,
+               `thumbnail_file_name`    AS `thumbnailFileName`,
+               thumbnail_content_type AS `thumbnailContactType`,
+               `title`                  AS `title`,
+               `place_category_code`    AS `placeCategoryCode`,
+               `contact_first`          AS `contactFirst`,
+               `contact_second`         AS `contactSecond`,
+               `contact_third`          AS `contactThird`,
+               `address_postal`         AS `addressPostal`,
+               `address_primary`        AS `addressPrimary`,
+               `address_secondary`      AS `addressSecondary`,
+               `latitude`               AS `latitude`,
+               `longitude`              AS `longitude`,
+               `description`            AS `description`,
+               `schedule`               AS `schedule`,
+               `user_email`             AS `userEmail`,
+               `created_at`             AS `createdAt`,
+               `modified_at`            AS `modifiedAt`
+        FROM `matzip`.`places`
+        WHERE `contact_first` = #{contactFirst}
+          AND `contact_second` = #{contactSecond}
+          AND `contact_third` = #{contactThird}
+    </select>
+
+    <select id="selectPlaceByCoords"
+            resultType="com.jwj.matzip.dtos.PlaceDto">
+        SELECT `place`.`index`                 AS `index`,
+               `thumbnail`                     AS `thumbnail`,
+               `thumbnail_file_name`           AS `thumbnailFileName`,
+               thumbnail_content_type        AS `thumbnailContactType`,
+               `title`                         AS `title`,
+               `place_category_code`           AS `placeCategoryCode`,
+               `contact_first`                 AS `contactFirst`,
+               `contact_second`                AS `contactSecond`,
+               `contact_third`                 AS `contactThird`,
+               `address_postal`                AS `addressPostal`,
+               `address_primary`               AS `addressPrimary`,
+               `address_secondary`             AS `addressSecondary`,
+               `latitude`                      AS `latitude`,
+               `longitude`                     AS `longitude`,
+               `description`                   AS `description`,
+               `schedule`                      AS `schedule`,
+               `place`.`user_email`            AS `userEAmail`,
+               `place`.`created_at`            AS `createdAt`,
+               `place`.`modified_at`           AS `modifiedAt`,
+               `category`.`text`               AS `placeCategoryText`,
+               COUNT(`review`.`index`)         AS `reviewCount`,
+               COUNT(`favorite`.`place_index`) AS `favoriteCount`
+        FROM `matzip`.`places` AS `place`
+                 LEFT JOIN `matzip`.`users` AS `user` ON `place`.`user_email` = `user`.`email`
+                 LEFT JOIN `matzip`.`place_categories` AS `category`
+                           ON `place`.`place_category_code` = `category`.`code`
+                 LEFT JOIN `matzip`.`place_reviews` AS `review` ON `place`.`index` = `review`.`place_index`
+                 LEFT JOIN `matzip`.place_favorites AS `favorite` ON `place`.`index` = `favorite`.`place_index`
+        WHERE `latitude` BETWEEN #{minLat} AND #{maxLat}
+          AND `longitude` BETWEEN #{minLng} AND #{maxLng}
+        GROUP BY `place`.`index`
+    </select>
+
+    <select id="selectPlaceDtoByIndex"
+            resultType="com.jwj.matzip.dtos.PlaceDto">
+        SELECT `place`.`index`                  AS `index`,
+               `place`.`thumbnail`              AS `thumbnail`,
+               `place`.`thumbnail_file_name`    AS `thumbnailFileName`,
+               `place`.thumbnail_content_type AS `thumbnailContactType`,
+               `place`.`title`                  AS `title`,
+               `place`.`place_category_code`    AS `placeCategoryCode`,
+               `place`.`contact_first`          AS `contactFirst`,
+               `place`.`contact_second`         AS `contactSecond`,
+               `place`.`contact_third`          AS `contactThird`,
+               `place`.`address_postal`         AS `addressPostal`,
+               `place`.`address_primary`        AS `addressPrimary`,
+               `place`.`address_secondary`      AS `addressSecondary`,
+               `place`.`latitude`               AS `latitude`,
+               `place`.`longitude`              AS `longitude`,
+               `place`.`description`            AS `description`,
+               `place`.`schedule`               AS `schedule`,
+               `place`.`user_email`             AS `userEAmail`,
+               `place`.`created_at`             AS `createdAt`,
+               `place`.`modified_at`            AS `modifiedAt`,
+               `category`.`text`                AS `placeCategoryText`,
+               COUNT(`review`.`index`)          AS `reviewCount`,
+               COUNT(`favorite`.`place_index`)  AS `favoriteCount`,
+               `user`.`nickname`                AS `userNickname`
+        FROM `matzip`.`places` AS `place`
+                 LEFT JOIN `matzip`.`place_categories` AS `category`
+                           ON `place`.`place_category_code` = `category`.`code`
+                 LEFT JOIN `matzip`.`place_reviews` AS `review` ON `place`.`index` = `review`.`place_index`
+                 LEFT JOIN `matzip`.place_favorites AS `favorite` ON `place`.`index` = `favorite`.`place_index`
+                 LEFT JOIN `matzip`.`users` AS `user` ON `place`.`user_email` = `user`.`email`
+        WHERE place.`index` = #{index}
+        GROUP BY `place`.`index`
+    </select>
+    <delete id="deletePlaceByIndex">
+        DELETE
+        FROM `matzip`.`places`
+        WHERE `index` = #{index}
+    </delete>
+</mapper>

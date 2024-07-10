@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+
+._obj-label {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  justify-content: flex-start;
+
+  > .__text {
+    color: #757575;
+    font-size: 0.8rem;
+  }
+
+  > .__horizontal {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    gap: 0.375rem;
+    justify-content: flex-start;
+
+    > .spring {
+      flex: 1;
+    }
+  }
+
+  > .__warning {
+    max-height: 0;
+    color: #e74c3c;
+    font-size: 0.8rem;
+    line-height: 1.25;
+    overflow: hidden;
+    transition-duration: 250ms;
+    transition-property: max-height;
+    transition-timing-function: ease;
+  }
+
+  &:hover {
+    > .__text {
+      color: #424242;
+    }
+  }
+
+  &:focus-within {
+    > .__text {
+      color: #3498db;
+    }
+  }
+
+  &.-invalid {
+    .__field {
+      border-color: #e74c3c;
+      color: #e74c3c;
+    }
+
+    > .__text {
+      color: #e74c3c;
+    }
+
+    > .__warning {
+      max-height: 2rem;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+

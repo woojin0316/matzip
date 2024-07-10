@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jwj.matzip.mappers.PlaceReportMapper">
+    <insert id="insertPlaceReport"
+            useGeneratedKeys="true"
+            keyColumn="place_report_id"
+            keyProperty="index"
+            parameterType="com.jwj.matzip.entities.PlaceReportEntity">
+        INSERT INTO `matzip`.`place_reports`(`user_email`, `place_index`, `created_at`)
+        VALUES (#{userEmail}, #{placeIndex}, #{createdAt})
+    </insert>
+<select id="selectPlaceReport" resultType="com.jwj.matzip.entities.PlaceReportEntity">
+    SELECT `user_email`  AS `userEmail`,
+           `place_index` AS `placeIndex`,
+           `created_at`  AS `createdAt`
+    FROM `matzip`.`place_reports`
+    WHERE `place_index` = #{placeIndex}
+      AND `user_email` = #{userEmail}
+    LIMIT 1
+</select>
+</mapper>

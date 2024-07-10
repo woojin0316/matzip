@@ -1,0 +1,39 @@
+._obj-check-label {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.375rem;
+  justify-content: flex-start;
+}
+._obj-check-label > input[type=checkbox] {
+  display: none;
+}
+._obj-check-label > .__box {
+  width: 0.875rem;
+  height: 0.875rem;
+  max-width: 0.875rem;
+  max-height: 0.875rem;
+  min-width: 0.875rem;
+  min-height: 0.875rem;
+  background-color: #ffffff;
+  border: 0.0625rem solid #d7d7d7;
+  border-radius: 0.25rem;
+  transition-duration: 125ms;
+  transition-property: background-color, border-color;
+  transition-timing-function: ease;
+}
+._obj-check-label input[type=checkbox]:checked ~ .__box {
+  background-color: #3498db;
+  border-color: #3498db;
+}
+._obj-check-label > .__text {
+  color: #3b3b3b;
+}
+._obj-check-label:hover > .__box {
+  border-color: #bdbdbd;
+}
+._obj-check-label:hover > .__text {
+  color: #212121;
+}
+
+/*# sourceMappingURL=common._obj-check-label.css.map */

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jwj.matzip.mappers.PlaceFavoriteMapper">
+    <delete id="deletePlaceFavorite">
+        DELETE
+        FROM `matzip`.`place_favorites`
+        WHERE `place_index` = #{placeIndex}
+          AND BINARY `user_email` = #{userEmail}
+        LIMIT 1
+    </delete>
+
+    <insert id="insertPlaceFavorite" parameterType="com.jwj.matzip.entities.PlaceFavoriteEntity">
+        INSERT INTO `matzip`.`place_favorites` (`place_index`, `user_email`, `created_at`)
+        VALUES (#{placeIndex}, #{userEmail}, #{createdAt})
+    </insert>
+
+    <select id="selectPlaceFavorite" resultType="com.jwj.matzip.entities.PlaceFavoriteEntity">
+        SELECT `place_index` AS `placeIndex`,
+               `user_email`  AS `userEmail`,
+               `created_at`  AS `createdAt`
+        FROM `matzip`.`place_favorites`
+        WHERE `place_index` = #{placeIndex}
+          AND BINARY `user_email` = #{userEmail}
+        LIMIT 1
+    </select>
+</mapper>

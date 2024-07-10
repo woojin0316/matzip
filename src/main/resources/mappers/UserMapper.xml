@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jwj.matzip.mappers.UserMapper">
+    <insert id="insertEmailAuth" parameterType="com.jwj.matzip.entities.EmailAuthEntity">
+        INSERT INTO `matzip`.`email_auths`(`email`, `code`, `salt`, `created_at`, `expires_at`, `is_expired`, `is_verified`, `is_used`)
+        VALUES (#{email}, #{code}, #{salt}, #{createdAt}, #{expiresAt}, #{isExpired}, #{isVerified}, #{isUsed})
+    </insert>
+
+    <insert id="insertUser" parameterType="com.jwj.matzip.entities.UserEntity">
+        INSERT INTO `matzip`.`users`(`email`, `password`, `nickname`, `created_at`, `is_admin`, `is_deleted`,`is_suspended`)
+        VALUES (#{email}, #{password}, #{nickname}, #{createdAt}, #{isAdmin}, #{isDeleted},#{isSuspended})
+    </insert>
+
+    <select id="selectEmailAuthByEmailCodeSalt" resultType="com.jwj.matzip.entities.EmailAuthEntity">
+        SELECT `email` AS `email`,
+               `code` AS `code`,
+               `salt` AS `salt`,
+               `created_at` AS `createdAt`,
+               `expires_at` AS `expiresAt`,
+               `is_expired` AS `isExpired`,
+               `is_verified` AS `isVerified`,
+               `is_Used` AS `isUsed`
+        FROM `matzip`.`email_auths`
+        WHERE BINARY `email` = #{email}
+          AND BINARY `code` = #{code}
+          AND BINARY `salt` = #{salt}
+        LIMIT 1
+    </select>
+
+    <select id="selectUserByNickname" resultType="com.jwj.matzip.entities.UserEntity">
+        SELECT `email` AS `email`,
+               `password` AS `password`,
+               `nickname` AS `nickname`,
+               `created_at` AS `createdAt`,
+               `is_admin` AS `isAdmin`,
+               `is_deleted` AS `isDeleted`,
+               `is_suspended` AS `isSuspended`
+        FROM `matzip`.`users`
+        WHERE BINARY `nickname` = #{nickname}
+        LIMIT 1
+    </select>
+
+
+    <select id="selectUserByEmail" resultType="com.jwj.matzip.entities.UserEntity">
+        SELECT `email` AS `email`,
+               `password` AS `password`,
+               `nickname` AS `nickname`,
+               `created_at` AS `createdAt`,
+               `is_admin` AS `isAdmin`,
+               `is_deleted` AS `isDeleted`,
+               `is_suspended` AS `isSuspended`
+        FROM `matzip`.`users`
+        WHERE BINARY `email` = #{email}
+        LIMIT 1
+    </select>
+
+    <update id="updateEmailAuth" parameterType="com.jwj.matzip.entities.EmailAuthEntity">
+        UPDATE `matzip`.`email_auths`
+        SET `created_at` = #{createdAt},
+            `expires_at` = #{expiresAt},
+            `is_expired` = #{isExpired},
+            `is_verified`=  #{isVerified},
+            `is_Used` = #{isUsed}
+        WHERE BINARY `email` = #{email}
+          AND BINARY `code` = #{code}
+          AND BINARY `salt` = #{salt}
+    </update>
+
+    <update id="updateUser" parameterType="com.jwj.matzip.entities.UserEntity">
+        UPDATE `matzip`.`users`
+        SET `password`     = #{password},
+            `nickname`     = #{nickname},
+            `created_at`   = #{createdAt},
+            `is_admin`     = #{isAdmin},
+            `is_deleted`   = #{isDeleted},
+            `is_suspended` = #{isSuspended}
+        WHERE BINARY `email` = #{email}
+        LIMIT 1
+    </update>
+</mapper>

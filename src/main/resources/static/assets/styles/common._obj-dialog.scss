@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+._obj-dialog {
+  top: calc(50% + 0.25rem);
+  left: 50%;
+  width: 22.5rem;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 1.5rem 0.0625rem #212121a0;
+  box-sizing: border-box;
+  opacity: 0;
+  padding: 2.5rem;
+  pointer-events: none;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  transition-duration: 250ms;
+  transition-property: top, opacity;
+  transition-timing-function: ease;
+  z-index: 9;
+
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: flex-start;
+
+  &.-visible{
+    top:50%;
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  > .__title {
+    font-size: 2rem;
+    font-weight: 100;
+    margin-bottom: 1.5rem;
+  }
+}

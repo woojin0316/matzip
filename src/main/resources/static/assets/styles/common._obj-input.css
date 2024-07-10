@@ -1,0 +1,22 @@
+._obj-input {
+  background-color: #ffffff;
+  border: 0.0625rem solid white;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  color: #3b3b3b;
+  font: inherit;
+  outline: none;
+  padding: 0.5rem 0.75rem;
+  transition-duration: 125ms;
+  transition-property: border-color, color;
+  transition-timing-function: ease;
+}
+._obj-input:hover {
+  border-color: #bdbdbd;
+  color: #212121;
+}
+._obj-input:focus {
+  border-color: #3498db;
+}
+
+/*# sourceMappingURL=common._obj-input.css.map */

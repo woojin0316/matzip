@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+._obj-check-label {
+  cursor: pointer;
+  user-select: none;
+
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.375rem;
+  justify-content: flex-start;
+
+  > input[type="checkbox"] {
+    display: none;
+  }
+
+  $box-border-color: #bdbdbd;
+  $text-color: #212121;
+
+  > .__box {
+    $size: 1rem;
+
+    width: $size;
+    height: $size;
+    max-width: $size;
+    max-height: $size;
+    min-width: $size;
+    min-height: $size;
+    background-color: #ffffff;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 87.5%;
+    border: 0.0625rem solid lighten($box-border-color, 10%);
+    border-radius: 0.25rem;
+    transition-duration: 125ms;
+    transition-property: background-color, border-color;
+    transition-timing-function: ease;
+  }
+
+  input[type="checkbox"]:checked ~ .__box {
+    background-color: #3498db;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABQ0lEQVR4nO3UvUtcQRSG8fELV12wSamVYKUIYhHYlKltU4ilYGdpaSXbipWWljb+AWoiGkgXCIJVUllZCFooCH785LIbEtYd173s3EL2Ke8c5nnP4cwNoUuXhGAKv7CHsaLlgzj1jyssFBmgqjmVIuQf8dBE/oiZ1PISziLdbySVZ2SSiPwPyiElqNTH3Gz0n1LLR/A70n01qTwD2xF5tg+lkBJ8xlMT+T3mUstHcR7pfi3vpWVsYRNDLWp3IvKfGMi7TEf/XXScfYvUzkfkd5jOIx+oCxs5aJwEPuAiEmC1bXkGZiMXvgiB3UjdD/SFPKAfX1uFwJfI+S0mc8n/gmF8eyVEth+XkbOV0AnUQhxqj+/o7UiAHCFuMBE6jbeHWOq4vI0Q++gJKREPcY3xpPIWr2MxFInaP2AdJ1guVN7l3fIM1lqJskcb9u0AAAAASUVORK5CYII=");
+    border-color: #3498db;
+  }
+
+  > .__text {
+    color: lighten($text-color, 10%);
+  }
+
+
+  &:hover {
+    > .__box {
+      border-color: $box-border-color;
+    }
+
+    > .__text {
+      color: $text-color;
+    }
+  }
+}
